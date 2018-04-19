@@ -127,7 +127,14 @@ public class TablesFrame extends JFrame implements ActionListener {
 			new ShowTableFrame(this, rs, "vendor_invoice");
 		}
 		else if(e.getSource() == usersButton) {
-			//todo
+			ResultSet rs = null;
+			try {
+				rs = DatabaseFactory.executeQuery("SELECT * FROM master.users");
+			}
+			catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+			new ShowTableFrame(this, rs, "users");
 		}
 		else if(e.getSource() == customersButton) {
 			ResultSet rs = null;
