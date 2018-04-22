@@ -109,16 +109,24 @@ public class ShowTableFrame extends JFrame implements ActionListener {
 			 
 		}
 		else if(e.getSource() == deleteButton) {
-			int rowNumber = inventoryTable.getSelectedRow();
-			String statement = "DELETE FROM master." + tableName + " WHERE ";
-			statement += headers.get(0) + "=" + inventoryTable.getValueAt(rowNumber, 0);
-			//System.out.println(statement);
-			
-			try {
-				DatabaseFactory.executeStatement(statement);
-				JOptionPane.showMessageDialog(this, "Item deleted successfully");
-			} catch (SQLException e1) {
-				JOptionPane.showMessageDialog(this, "Error:\n" + e1.getMessage());
+			int n = JOptionPane.showConfirmDialog(
+				    this,
+				    "Are you sure you want to delete?",
+				    "Confirm",
+				    JOptionPane.YES_NO_OPTION);
+			System.out.println(n);
+			if(n == 0) {
+				int rowNumber = inventoryTable.getSelectedRow();
+				String statement = "DELETE FROM master." + tableName + " WHERE ";
+				statement += headers.get(0) + "=" + inventoryTable.getValueAt(rowNumber, 0);
+				//System.out.println(statement);
+				
+				try {
+					DatabaseFactory.executeStatement(statement);
+					JOptionPane.showMessageDialog(this, "Item deleted successfully");
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(this, "Error:\n" + e1.getMessage());
+				}
 			}
 					
 		}
