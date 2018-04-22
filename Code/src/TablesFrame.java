@@ -114,7 +114,7 @@ public class TablesFrame extends JFrame implements ActionListener {
 			
 		}
 		else if(e.getSource() == reportsButton) {
-			//todo
+			new ReportsFrame(this);
 		}
 		else if(e.getSource() == accountsPayableButton) {
 			ResultSet rs = null;
@@ -157,7 +157,7 @@ public class TablesFrame extends JFrame implements ActionListener {
 			new ShowTableFrame(this, rs, "customer_order");
 		}
 		else if(e.getSource() == searchButton) {
-			//todo
+			new SearchFrame(this);
 		}
 		else if(e.getSource() == accountsReceivableButton) {
 			ResultSet rs = null;
