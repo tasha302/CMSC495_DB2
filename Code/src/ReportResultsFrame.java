@@ -42,7 +42,6 @@ public class ReportResultsFrame extends JFrame implements ActionListener {
 
 			data = new Vector<Vector<Object>>();
 			while(rs.next()) {
-				System.out.println("here");
 				Vector<Object> vector = new Vector<Object>();
 				for(int i = 1; i < colCount+1; i++) {
 					vector.add(rs.getObject(i));
