@@ -44,6 +44,7 @@ public class DatabaseFactory {
 	public static ResultSet executeQuery(String query) throws SQLException {
 		con = DriverManager.getConnection("jdbc:mysql://localhost/MASTER?autoReconnect=true&useSSL=false", "test", "password");
 		stmt = con.createStatement();
+		stmt.execute("set @runtot = 0");
 		ResultSet rs = stmt.executeQuery(query);
 		return rs;
 	}

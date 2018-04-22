@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +23,7 @@ public class ReportResultsFrame extends JFrame implements ActionListener {
 	private Vector<Vector<Object>> data;
 	private DefaultTableModel model;
 	private JTable dataTable;
+	private JButton backButton;
 	
 	public ReportResultsFrame(Component parent, String tableName, String query) {
 		
@@ -63,13 +66,21 @@ public class ReportResultsFrame extends JFrame implements ActionListener {
 		
 		JScrollPane scrollPane = new JScrollPane(dataTable);
         add(scrollPane, BorderLayout.CENTER);
+        
+        //back button panel
+        JPanel buttonPanel = new JPanel();
+        backButton = new JButton("Back");
+        backButton.addActionListener(this);
+        buttonPanel.add(backButton);
+        
+        add(buttonPanel, BorderLayout.SOUTH);
 		
 		setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		this.dispose();
 		
 	}
 

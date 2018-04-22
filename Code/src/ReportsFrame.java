@@ -114,8 +114,8 @@ public class ReportsFrame extends JFrame implements ActionListener {
             		  +	"where c.exp_date between '";
             }
             else if (rdBtnTotalOrders.isSelected()){
-            	tableName = "vendor_order";
-            	query = "select a.date_ordered, b.name, c.cost, a.quantity_ordered "
+            	tableName = "vendor_order ";
+            	query = "select a.date_ordered, b.name, c.cost, a.quantity_ordered, round(c.cost * a.quantity_ordered, 2) as total, round((@runtot := @runtot + (c.cost * a.quantity_ordered)), 2) AS running_total "
               		  +	"from vendor_order a "
               		  +	"inner join item_description b on a.item_id = b.item_id "
               		  +	"inner join inventory c on a.item_id = c.item_id "
@@ -123,7 +123,7 @@ public class ReportsFrame extends JFrame implements ActionListener {
             }
             else if (rdBtnTotalSales.isSelected()){
             	tableName = "customer_order";
-            	query = "select a.date_ordered, b.name, c.cost, a.quantity_ordered "
+            	query = "select a.date_ordered, b.name, c.cost, a.quantity_ordered, round(c.cost * a.quantity_ordered, 2) as total, round((@runtot := @runtot + (c.cost * a.quantity_ordered)), 2) AS running_total "
             		  +	"from customer_order a "
             		  +	"inner join item_description b on a.item_id = b.item_id "
             		  +	"inner join inventory c on a.item_id = c.item_id "
