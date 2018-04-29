@@ -97,25 +97,26 @@ public class EditFrame extends JFrame implements ActionListener {
 					}
 					else if(type.equals("DATE")) {
 						/*This code formats to the corrected date
-                        DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
-                   		Date date = null;
-                    	try {
-                        date = (Date) formatter.parse(textAreas.get(i).getText());
-                   		} catch (ParseException ex) {
-                      	    JOptionPane.showMessageDialog(null,"Unable to Format Date");
-                    	    }
-                 		statement += "'" + date.toString() + "'";
-		    		    */
-	           		    /*This code just throws an error message claiming incorrect format
+                       				 DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
+                   				Date date = null;
+                    				try {
+                        			date = (Date) formatter.parse(textAreas.get(i).getText());
+                   				} catch (ParseException ex) {
+                      	   			JOptionPane.showMessageDialog(null,"Unable to Format Date");
+                    	   			}
+                 				statement += "'" + date.toString() + "'";
+		    		    		*/
+	           		    	        /*This code just throws an error message claiming incorrect format
 		  				DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
-                   		formatter.setLenient(false);
-		 			    try {
-                    		Date date= formatter.parse(textAreas.get(i).getText());
-                   	    } catch (ParseException e) {
-                                JOptionPane.showMessageDialog(null,"Invalid Date Format. Please Enter Date As: yyyy-MM-DD");
-                  		}
-		    			statement += "'" + date.toString() + "'";
-		                */
+                   		                formatter.setLenient(false);
+		 			        try {
+                    		                Date date= formatter.parse(textAreas.get(i).getText());
+				                statement += "'" + date.toString() + "'";
+                   	                        } catch (ParseException e) {
+                                                JOptionPane.showMessageDialog(null,"Invalid Date Format. Please Enter Date As: yyyy-MM-DD");
+                  		                }
+		    			
+		                                */
 						statement += "'" + textAreas.get(i).getText() + "'";
 					}
 					else if(type.equals("INT")) {
