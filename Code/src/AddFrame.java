@@ -104,7 +104,7 @@ public class AddFrame extends JFrame implements ActionListener {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
                     Date date = null;
                     try {
-                        date = (Date) formatter.parse(textAreas.get(i).getText());
+                        date = (Date)formatter.parse(textAreas.get(i).getText());
                     } catch (ParseException ex) {
                         JOptionPane.showMessageDialog(null,"Unable to Format Date");
                     }
@@ -114,11 +114,12 @@ public class AddFrame extends JFrame implements ActionListener {
 		    DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
                     formatter.setLenient(false);
 		    try {
-                    Date date= formatter.parse(textAreas.get(i).getText());
-                    } catch (ParseException e) {
+                    Date date= (Date)formatter.parse(textAreas.get(i).getText());
+                    data += "'" + date.toString() + "'";
+                    } catch (ParseException e1) {
                      JOptionPane.showMessageDialog(null,"Invalid Date Format. Please Enter Date As: yyyy-MM-DD");
                     }
-		    data += "'" + date.toString() + "'";
+		    
 		    */
 	            data += textAreas.get(i).getText();
                 } else if (type.equals("INT")) {
