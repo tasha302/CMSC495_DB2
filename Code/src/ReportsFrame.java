@@ -27,7 +27,7 @@ public class ReportsFrame extends JFrame implements ActionListener {
     ReportsFrame(Component parent){
         setTitle("Reports");
         setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         
         backButton.addActionListener(this);
@@ -80,7 +80,7 @@ public class ReportsFrame extends JFrame implements ActionListener {
         addItem(insidePanel, box3, 2,3,1,1, GridBagConstraints.CENTER);
 
         add(insidePanel);
-
+        
         setVisible(true);
     }
 

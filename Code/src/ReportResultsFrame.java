@@ -32,7 +32,6 @@ public class ReportResultsFrame extends JFrame implements ActionListener {
 		setLocationRelativeTo(parent);
 		setTitle(tableName);
 		setLayout(new BorderLayout());
-		System.out.println(query);
 		
 		try {
 			ResultSet rs = DatabaseFactory.executeQuery(query);

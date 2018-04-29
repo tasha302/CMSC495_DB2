@@ -23,12 +23,14 @@ public class TablesFrame extends JFrame implements ActionListener {
 	JButton salesButton;
 	JButton searchButton;
 	JButton accountsReceivableButton;
+	JButton alertsButton;
+	JButton logoutButton;
 	
 	public TablesFrame() {
 		setTitle("Tables");
 		setSize(600, 400);
 		//setLayout(new GridLayout(5, 2, 15, 15));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocation(100, 100);
         
         JPanel outsidePanel = new JPanel();
@@ -36,7 +38,7 @@ public class TablesFrame extends JFrame implements ActionListener {
         outsidePanel.setBorder(new EmptyBorder(15,15,15,15));
         
         JPanel insidePanel = new JPanel();
-        insidePanel.setLayout(new GridLayout(5, 2, 15, 15));
+        insidePanel.setLayout(new GridLayout(6, 2, 15, 15));
         
         //instantiate button and add action listeners
         inventoryButton = new JButton("Inventory");
@@ -69,6 +71,12 @@ public class TablesFrame extends JFrame implements ActionListener {
         accountsReceivableButton = new JButton("Accounts Receivable");
         accountsReceivableButton.addActionListener(this);
         insidePanel.add(accountsReceivableButton);
+        alertsButton = new JButton("Alerts");
+        alertsButton.addActionListener(this);
+        insidePanel.add(alertsButton);
+        logoutButton = new JButton("Log Out");
+        logoutButton.addActionListener(this);
+        insidePanel.add(logoutButton);
         
         outsidePanel.add(insidePanel);
         
@@ -191,7 +199,13 @@ public class TablesFrame extends JFrame implements ActionListener {
 			}
 			new ShowTableFrame(this, rs, "customer_bill");
 		}
-		
+		else if(e.getSource() == alertsButton) {
+			new AlertsFrame(this);
+		}
+		else if(e.getSource() == logoutButton) {
+			this.dispose();
+			new LoginFrame();
+		}
 		
 		
 	}

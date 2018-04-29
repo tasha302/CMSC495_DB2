@@ -23,7 +23,7 @@ public class SearchFrame extends JFrame implements ActionListener {
     SearchFrame(Component parent){
         setTitle("Search");
         setSize(600, 400);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
         
         backButton.addActionListener(this);

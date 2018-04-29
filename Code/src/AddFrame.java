@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class AddFrame extends JFrame implements ActionListener {
@@ -21,7 +22,7 @@ public class AddFrame extends JFrame implements ActionListener {
 	
 	private String tableName;
 	private Vector<String> labels;
-	private Vector<JTextArea> textAreas;
+	private Vector<JTextField> textAreas;
 	private ResultSet resultSet;
 	
 	private JButton addButton;
@@ -43,11 +44,15 @@ public class AddFrame extends JFrame implements ActionListener {
         JPanel insidePanel = new JPanel();
         insidePanel.setLayout(new GridLayout(labels.size(), 2, 15, 15));
         
-        textAreas = new Vector<JTextArea>();
+        textAreas = new Vector<JTextField>();
         
         for(int i = 0; i < labels.size(); i++) {
         	insidePanel.add(new JLabel(labels.get(i)));
-        	textAreas.add(new JTextArea(1,10));
+        	JTextField field = new JTextField(10);
+        	if(i == 0) {
+        		field.setEditable(false);
+        	}
+        	textAreas.add(field);
         	insidePanel.add(textAreas.get(i));
         }
         
