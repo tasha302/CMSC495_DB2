@@ -30,6 +30,7 @@ public class ShowTableFrame extends JFrame implements ActionListener {
 	private int colCount;
 	private Vector<String> headers;
 	private Vector<Vector<Object>> data;
+	private Vector<String> headerLabels;
 	
 	public ShowTableFrame(Component parent, ResultSet rs, String tableName) {
 		setSize(600, 600);
@@ -44,8 +45,10 @@ public class ShowTableFrame extends JFrame implements ActionListener {
 			//get column names
 			colCount = resultSet.getMetaData().getColumnCount();
 			headers = new Vector<String>();
+			headerLabels = new Vector<String>();
 			for(int col = 1; col < colCount+1; col++) {
 				headers.add(resultSet.getMetaData().getColumnName(col));
+				headerLabels.add(resultSet.getMetaData().getColumnLabel(col));
 			}
 			
 			//get data
@@ -57,7 +60,7 @@ public class ShowTableFrame extends JFrame implements ActionListener {
 				}
 				data.add(vector);
 				
-				model = new DefaultTableModel(data, headers);
+				model = new DefaultTableModel(data, headerLabels);
 			}
 		}
 		catch(SQLException ex) {
@@ -82,6 +85,11 @@ public class ShowTableFrame extends JFrame implements ActionListener {
 		deleteButton.addActionListener(this);
 		backButton = new JButton("Back");
 		backButton.addActionListener(this);
+		if(tableName.equals("inventory")) {
+			addButton.setEnabled(false);
+			editButton.setEnabled(false);
+			deleteButton.setEnabled(false);
+		}
         controlsPanel.add(addButton);
         controlsPanel.add(editButton);
         controlsPanel.add(deleteButton);
@@ -95,7 +103,7 @@ public class ShowTableFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == addButton) {
-			new AddFrame(this, headers, tableName, resultSet);
+			new AddFrame(this, headers, headerLabels, tableName, resultSet);
 		}
 		else if(e.getSource() == editButton) {
 			//get the data from the selected row

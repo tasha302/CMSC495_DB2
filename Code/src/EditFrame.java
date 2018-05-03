@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -80,7 +82,7 @@ public class EditFrame extends JFrame implements ActionListener {
 		if(e.getSource() == editButton) {
 			
 			String statement = "";
-			for(int i = 0; i < labels.size(); i++) {
+			for(int i = 1; i < labels.size(); i++) {
 				statement = "";
 				if(!textAreas.get(i).getText().equals(data.get(i).toString())) {
 					statement += "UPDATE master." + tableName + " SET ";
@@ -96,6 +98,12 @@ public class EditFrame extends JFrame implements ActionListener {
 						statement += "\"" + textAreas.get(i).getText() + "\"";
 					}
 					else if(type.equals("DATE")) {
+						
+						String date = textAreas.get(i).getText();
+							if(!checkDate(date)) {
+			            		JOptionPane.showMessageDialog(this,"Invalid Date Format. Please Enter Date As: yyyy-MM-DD");
+			            		return;
+			            	}
 						/*This code formats to the corrected date
                        				 DateFormat formatter = new SimpleDateFormat("yyyy-MM-DD");
                    				Date date = null;
@@ -117,14 +125,15 @@ public class EditFrame extends JFrame implements ActionListener {
                   		                }
 		    			
 		                                */
-						statement += "'" + textAreas.get(i).getText() + "'";
+						//statement += "'" + textAreas.get(i).getText() + "'";
+						statement += "'" + date + "'";
 					}
 					else if(type.equals("INT")) {
 						statement += textAreas.get(i).getText();
 					}
 					
 					statement += " WHERE " + labels.get(0) +"=" + data.get(0);
-					
+					System.out.println(statement);
 					try {
 						DatabaseFactory.executeStatement(statement);
 						JOptionPane.showMessageDialog(this, "Item updated successfully");
@@ -141,6 +150,17 @@ public class EditFrame extends JFrame implements ActionListener {
 			this.dispose();
 		}
 		
+	}
+	
+	private boolean checkDate(String input) {
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	     try {
+	          format.parse(input);
+	          return true;
+	     }
+	     catch(ParseException e){
+	          return false;
+	     }
 	}
 
 }

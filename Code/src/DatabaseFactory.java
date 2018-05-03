@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,6 +48,18 @@ public class DatabaseFactory {
 		stmt.execute("set @runtot = 0");
 		ResultSet rs = stmt.executeQuery(query);
 		return rs;
+	}
+	
+	public static String getKey(String statement) throws SQLException {
+		PreparedStatement pstmt = null;
+		con = DriverManager.getConnection("jdbc:mysql://localhost/MASTER?autoReconnect=true&useSSL=false", "test", "password");
+		
+		pstmt = con.prepareStatement(statement,Statement.RETURN_GENERATED_KEYS);
+		pstmt.executeUpdate();
+		   ResultSet rs = pstmt.getGeneratedKeys();
+		    rs.next();
+		   return Integer.toString(rs.getInt(1));
+		
 	}
 
 }
