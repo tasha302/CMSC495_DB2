@@ -91,8 +91,8 @@ public class TablesFrame extends JFrame implements ActionListener {
 		if(e.getSource() == inventoryButton) {
 			ResultSet rs = null;
 			try {
-				String query = "Select inventory.item_id AS 'ID No.', item_description.name AS 'Name', \n"
-                        + "item_description.paragraph AS 'Description', inventory.quantity_onhand AS 'Stock Quantity', vendor.company_name AS\n"
+				String query = "Select item_description.name AS 'Name', \n"
+                        + "item_description.paragraph AS 'Description', inventory.cost AS 'Cost', inventory.quantity_onhand AS 'Stock Quantity', vendor.company_name AS\n"
                         + "'Supplier'\n"
                         + "From ((master.inventory INNER JOIN master.item_description ON inventory.item_id = item_description.item_id)\n"
                         + "INNER JOIN master.vendor ON inventory.vendor_id = vendor.vendor_id)\n"
