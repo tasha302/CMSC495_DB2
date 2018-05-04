@@ -1,84 +1,46 @@
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class AlertsFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	
-	private JButton lowStockButton;
-	private JButton expiringButton;
-	private JButton receivableButton;
-	private JButton payableButton;
-	private JTextField lowStockField;
-	private JTextField expiringField;
-	private JTextField receivableField;
-	private JTextField payableField;
-	private JButton backButton;
-	
+
+    private JButton lowStockButton = new JButton("Low Stock");
+    private JButton expiringButton = new JButton("Expiring Items");
+    private JTextField lowStockField = new JTextField(10);
+    private JTextField expiringField = new JTextField(10);
+    private JButton backButton = new JButton("Back");
+    
 	public AlertsFrame (Component parent) {
-		setTitle("Alerts");
-		setSize(1000, 400);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setTitle("Alerts");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parent);
-        setLayout(new BorderLayout());
-        
-        JPanel outsidePanel = new JPanel();
-        // add some padding
-        outsidePanel.setBorder(new EmptyBorder(15,15,15,15));
-        
+
         JPanel insidePanel = new JPanel();
-        insidePanel.setLayout(new GridLayout(2, 3, 2, 8));
-        
-        insidePanel.add(new JLabel("Show stock with quantity less than: "));
-        lowStockField = new JTextField(3);
-        insidePanel.add(lowStockField);
-        lowStockButton = new JButton("Low Stock");
+        insidePanel.setLayout(new GridBagLayout());
+
+        addItem(insidePanel, new JLabel("Show stock with quantity less than: "), 0,0,1,1, GridBagConstraints.EAST);
+        addItem(insidePanel, lowStockField,1,0,1,1, GridBagConstraints.CENTER);
+        addItem(insidePanel, lowStockButton, 2,0,1,1, GridBagConstraints.WEST);
+
+        addItem(insidePanel, new JLabel("Show items expiring in how many days: "), 0,1,1,1, GridBagConstraints.EAST);
+        addItem(insidePanel, expiringField, 1,1,1,1, GridBagConstraints.CENTER);
+        addItem(insidePanel, expiringButton, 2,1,1,1,GridBagConstraints.WEST);
+
+        addItem(insidePanel,backButton, 2,3,1,1,GridBagConstraints.SOUTH);
+
         lowStockButton.addActionListener(this);
-        insidePanel.add(lowStockButton);
-        insidePanel.add(new JLabel("Show items expiring in how many days: "));
-        expiringField = new JTextField(3);
-        insidePanel.add(expiringField);
-        expiringButton = new JButton("Expiring Items");
         expiringButton.addActionListener(this);
-        insidePanel.add(expiringButton);
-        /*
-        insidePanel.add(new JLabel("Payables due within the next how many days: "));
-        payableField = new JTextField(3);
-        insidePanel.add(payableField);
-        payableButton = new JButton("Payables Due");
-        payableButton.addActionListener(this);
-        insidePanel.add(payableButton);
-        insidePanel.add(new JLabel("Receivables due within the next how many days: "));
-        receivableField = new JTextField(3);
-        insidePanel.add(receivableField);
-        receivableButton = new JButton("Receivables Due");
-        receivableButton.addActionListener(this);
-        insidePanel.add(receivableButton);
-        */
-        
-        outsidePanel.add(insidePanel);
-        add(outsidePanel, BorderLayout.CENTER);
-        
-        JPanel southPanel = new JPanel();
-        backButton = new JButton("Back");
         backButton.addActionListener(this);
-        southPanel.add(backButton);
-        
-        add(southPanel, BorderLayout.SOUTH);
-        
+
+        add(insidePanel);
         setVisible(true);
 	}
 
@@ -112,6 +74,21 @@ public class AlertsFrame extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Please input a number into the text field");
 			}
 		}
+	}
+
+	private void addItem(JPanel p, JComponent c, int x, int y, int width, int height, int align)
+	{//addItem() sets parameters to shorten the addition of adding the panels to the frame.
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.gridwidth = width;
+		gc.gridheight = height;
+		gc.weightx = 100.0;
+		gc.weighty = 100.0;
+		gc.insets = new Insets(5, 5, 5, 5);
+		gc.anchor = align;
+		gc.fill = GridBagConstraints.NONE;
+		p.add(c, gc);
 	}
 
 }
