@@ -34,8 +34,8 @@ CREATE TABLE `vendor_invoice` (
   KEY `vendor_id_idx` (`vendor_id`),
   KEY `vendor_order_id_idx` (`vendor_order_id`),
   KEY `idx_creation_date` (`date_created`),
-  CONSTRAINT `vendor_id` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `vendor_order_id` FOREIGN KEY (`vendor_order_id`) REFERENCES `vendor_order` (`vendor_order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `vendor_id` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `vendor_order_id` FOREIGN KEY (`vendor_order_id`) REFERENCES `vendor_order` (`vendor_order_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
