@@ -85,7 +85,7 @@ public class ShowTableFrame extends JFrame implements ActionListener {
 		deleteButton.addActionListener(this);
 		backButton = new JButton("Back");
 		backButton.addActionListener(this);
-		if(tableName.equals("inventory")) {
+		if(tableName.equals("inventory") || tableName.equals("customer_bill") || tableName.equals("vendor_invoice")) {
 			addButton.setEnabled(false);
 			editButton.setEnabled(false);
 			deleteButton.setEnabled(false);

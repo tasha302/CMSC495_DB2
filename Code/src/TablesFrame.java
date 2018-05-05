@@ -1,4 +1,5 @@
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -97,7 +98,7 @@ public class TablesFrame extends JFrame implements ActionListener {
                         + "From ((master.inventory INNER JOIN master.item_description ON inventory.item_id = item_description.item_id)\n"
                         + "INNER JOIN master.vendor ON inventory.vendor_id = vendor.vendor_id)\n"
                         + "WHERE inventory.quantity_onhand >= 0\n"
-                        + "Group BY inventory.item_id, item_description.name, item_description.paragraph, inventory.quantity_onhand;";
+                        + "Order BY inventory.item_id, item_description.name, item_description.paragraph, inventory.quantity_onhand;";
 				rs = DatabaseFactory.executeQuery(query);
 			}
 			catch(SQLException ex) {
@@ -134,7 +135,7 @@ public class TablesFrame extends JFrame implements ActionListener {
 		else if(e.getSource() == accountsPayableButton) {
 			ResultSet rs = null;
 			try {
-				/*
+				
 				String query = "select vendor.company_name AS 'Company Paid', invoice_payment.vendor_invoice_id as 'Invoice No.', \n" +
                         "invoice_payment.bill_total as 'Amount Due', invoice_payment.total_debit as 'Amount Paid', invoice_payment.balance as\n" +
                         "'Balance', invoice_payment.payment_date as 'Payment Date'\n" +
@@ -142,8 +143,8 @@ public class TablesFrame extends JFrame implements ActionListener {
                         "inner join vendor on vendor_invoice.vendor_id = vendor.vendor_id)\n" +
                         "group by invoice_payment.vendor_invoice_id\n" +
                         "order by invoice_payment.vendor_invoice_id;";
-                        */
-				String query = "select * from vendor_order";
+                        
+				//String query = "select * from vendor_order";
 				rs = DatabaseFactory.executeQuery(query);
 			}
 			catch(SQLException ex) {
@@ -187,7 +188,7 @@ public class TablesFrame extends JFrame implements ActionListener {
 		else if(e.getSource() == accountsReceivableButton) {
 			ResultSet rs = null;
 			try {
-				/*
+				
 				String query = "select concat (customer.last,', ', customer.first) as 'Customer Name', bill_payment.customer_bill_id as 'Receipt No.', \n" +
                         "customer_bill.total_billed as 'Amount Due', bill_payment.total_paid as 'Amount Received', bill_payment.payment_type as\n" +
                         "'Payment Type', bill_payment.payment_date as 'Payment Date'\n" +
@@ -195,8 +196,8 @@ public class TablesFrame extends JFrame implements ActionListener {
                         "inner join customer on customer_bill.customer_id = customer.customer_id)\n" +
                         "group by customer_bill.customer_bill_id\n" +
                         "order by customer_bill.customer_bill_id;";
-                        */
-				String query = "select * from customer_invoice";
+                        
+				//String query = "select * from customer_invoice";
 				rs = DatabaseFactory.executeQuery(query);
 			}
 			catch(SQLException ex) {
@@ -209,6 +210,10 @@ public class TablesFrame extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == logoutButton) {
 			this.dispose();
+			System.gc();
+			for (Window window : Window.getWindows()) {
+			    window.dispose();
+			}
 			new LoginFrame();
 		}
 		

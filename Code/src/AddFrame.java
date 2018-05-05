@@ -96,6 +96,9 @@ public class AddFrame extends JFrame implements ActionListener {
     
     private JPanel createOrderPanel() {
     	//add additional labels for additional entries into multiple tables
+    	//4
+    	labels.remove(4);
+    	labels.add("Vendor Name");
     	labels.add("total_cost");
     	labels.add("expiration_date");
     	labels.add("due_date");
@@ -206,6 +209,24 @@ public class AddFrame extends JFrame implements ActionListener {
     	}
 
     	//insert into vendor_order
+    	//find vendor_id
+    	String query = "select vendor_id from master.vendor where company_name = '" + vendorID + "'";
+    	int id;
+    	try {
+			ResultSet rs = DatabaseFactory.executeQuery(query);
+			if(rs.next()) {
+				id = rs.getInt("vendor_id");
+				vendorID = Integer.toString(id);
+			} 
+			else {
+				JOptionPane.showMessageDialog(this, "Vendor name not found");
+				return;
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Vendor name not found");
+			return;
+		}
+    	
     	String statement = "insert into master.vendor_order (item_id, date_ordered, quantity_ordered, vendor_id) "
     					 + "values (" + itemID + ",'" +  dateOrdered.toString() + "', " 
     					 + quantityOrdered + ", " + vendorID + ")";
@@ -230,7 +251,6 @@ public class AddFrame extends JFrame implements ActionListener {
         
     	
     	//create new vendor_invoice
-    	String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     	statement = "insert into vendor_invoice (vendor_id, date_created, date_due, total_billed, vendor_order_id) "
     			         + "values (" + vendorID + ",'" + dateOrdered + "', " + "'" + dateDue + "', "
     			         + totalCost + ", " + newKey + ")";
@@ -283,7 +303,7 @@ public class AddFrame extends JFrame implements ActionListener {
 					int quantityInRecord = rs.getInt("quantity_onhand");
 					if(quantityInRecord > totalLeftToPurchase) {
 						String statement = "update master.inventory "
-										 + "set quantity_onhand=" + (quantityInRecord - Integer.parseInt(quantityOrdered))
+										 + "set quantity_onhand=" + (quantityInRecord - totalLeftToPurchase)
 										 + " where inventory_id=" + inventoryID;
 						DatabaseFactory.executeStatement(statement);
 						break;
@@ -310,28 +330,26 @@ public class AddFrame extends JFrame implements ActionListener {
     	//insert into customer_order
     	String statement = "insert into master.customer_order (item_id, date_ordered, quantity_ordered, customer_id) "
     					 + "values(" + itemID + ", '" + dateOrdered + "', " + quantityOrdered + ", " + customerID + ")"; 
-    	System.out.println(statement);
     	try {
     		customerOrderKey = DatabaseFactory.getKey(statement);
             JOptionPane.showMessageDialog(this, "Item added successfully to customer_order");
         } catch (SQLException e1) {
             JOptionPane.showMessageDialog(this, "Error:\n" + e1.getMessage());
         }
-    	System.out.println(customerOrderKey);
     	
     	
-    	//insert into customer_invoice
-    	/*
-    	statement = "insert into master.customer_invoice (date_created, total_billed, order_id, customer_id) "
+    	//insert into customer_bill
+    	
+    	statement = "insert into master.customer_bill (date_created, total_billed, customer_order_id, customer_id) "
     					 + "values('" + dateOrdered + "', " + totalCost + ", " + customerOrderKey
     					 + ", " + customerID + ")";
     	try {
 			DatabaseFactory.executeStatement(statement);
-			JOptionPane.showMessageDialog(this, "Customer invoice created");
+			JOptionPane.showMessageDialog(this, "Customer bill created");
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(this, "Error:\n" + e.getMessage());
 		}
-		*/
+		
     }
     
     private boolean checkDate(String input) {

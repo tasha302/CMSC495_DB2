@@ -129,12 +129,11 @@ public class ReportsFrame extends JFrame implements ActionListener {
             		  +	"inner join inventory c on a.item_id = c.item_id "
             		  +	"where a.date_ordered between '";
             }
-            /* no way to search for this
             else if (rdBtnNewCustomers.isSelected()){
             	tableName = "Customer";
-            	query = "";
+            	query = "select * from master.customer order by customer_id limit 10";
             	skipDate = true;
-            } */
+            } 
             else {
             	JOptionPane.showMessageDialog(this, "No Table Selected");
 	        	return;
